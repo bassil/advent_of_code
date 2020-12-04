@@ -1,12 +1,11 @@
 def get_passports_from_input(input_name):
 	"""returns list of passports parsed from input file input_name
-	
-	TODO: Document this
 
 	Args:
 
 		input_name - str -  path to file name
-		"""
+	"""
+
 	passports = []
 
 	with open(input_name) as f:
@@ -30,7 +29,13 @@ def get_passports_from_input(input_name):
 
 
 def get_parameters_from_passports(passports):
-	"""returns list of passport dictionaries"""
+	"""returns list of passport dictionaries
+
+	Args:
+
+		passports - list - list of strings, each string including passport parameters
+	"""
+
 	passport_dicts_list = []
 
 	for passport in passports:
@@ -53,6 +58,7 @@ def get_parameters_from_passports(passports):
 
 def is_passport_valid(passport_dict):
 	"""returns bool indicating whether a passport is valid or not"""
+
 	if len(passport_dict) == 8:
 	
 		return True
@@ -209,19 +215,34 @@ def is_passport_valid_2(passport_dict):
 	return False
 
 
-def get_valid_passport_count(passport_dicts_list):
-	"""returns count of valid """
+def get_valid_passport_count(passport_dicts_list, part):
+	"""returns count of valid passports
+
+	Args:
+	
+		passport_dicts_list - list - list of passport dictionaries
+		part - int - number indicating part number of question
+	"""
 	valid_password_count = 0
 
-	for passport_dict in passport_dicts_list:
-		####################################################
-		# # Uncomment statement corresponding to part number
-		# # Part 1
-		# if is_passport_valid(passport_dict):
+	# Determine part number and assign validation function to keyword valid
+
+	if part == 1:
 		
-		# # Part 2
-		if is_passport_valid_2(passport_dict):
-		####################################################
+		valid = is_passport_valid
+
+	elif part == 2:
+		
+		valid = is_passport_valid_2
+
+	else:
+
+		raise NotImplementedError("Part must be in [1, 2]")
+
+	for passport_dict in passport_dicts_list:
+		
+		if valid(passport_dict):
+			
 			valid_password_count += 1
 
 	return valid_password_count
@@ -241,12 +262,11 @@ if __name__ == '__main__':
 	# # Count number of valid passports.
 
 	
-	# valid_passport_count = get_valid_passport_count(passport_dicts_list)
-	# print(valid_passport_count)
+	valid_passport_count_1 = get_valid_passport_count(passport_dicts_list, 1)
+	print("Part 1 valid passport count:", valid_passport_count_1)
 
-	# PART 2
-	# Count number of valid passports with the added validation parameters
+	# # PART 2
+	# # Count number of valid passports with the added validation parameters
 
-	
-	valid_passport_count = get_valid_passport_count(passport_dicts_list)
-	print(valid_passport_count)
+	valid_passport_count_2 = get_valid_passport_count(passport_dicts_list, 2)
+	print("Part 2 valid passport count:", valid_passport_count_2)
