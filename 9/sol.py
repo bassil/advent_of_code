@@ -17,6 +17,11 @@ def is_sum_of_two(preamble, n):
 	return False
 
 
+def part_1(XMAS_data):
+	for i, n in enumerate(XMAS_data[25:]):
+		preamble = XMAS_data[i:i + 25]
+		if not is_sum_of_two(preamble, n):
+			return n
 
 
 if __name__ == '__main__':
@@ -24,10 +29,8 @@ if __name__ == '__main__':
 	with open("input.txt") as f:
 		XMAS_data = f.read().split('\n')
 
-	preamble = XMAS_data[:25]
-
 	# Part 1 - find first number in XMAS data, after the preamble,
 	# 		   that is not the sum of two numbers in the previous 25
-	print(XMAS_data[25])
+
+	print(part_1(XMAS_data))
 	
-	print(is_sum_of_two(preamble, XMAS_data[25]))
