@@ -90,7 +90,6 @@ def part_2(initialization_program):
 			mask = inp
 		else:
 			address = int(var.split("[")[1].split("]")[0])
-			binary_string = bin(int(inp))
 			addresses = apply_mask_to_address(mask, address)
 			for _address in addresses:
 				mem[_address] = int(inp)
