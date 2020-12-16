@@ -46,32 +46,25 @@ def get_mapped_fields(notes):
 	fields_map = {}
 	for i in range(len(valid_tickets_t)):
 		for field in intervals:
-			if all([value_in_interval(value,
-									  intervals[field]) \
+			if all([value_in_interval(value, intervals[field]) \
 			       for value in valid_tickets_t[i]]): 
 				if field in fields_map:
 					fields_map[field].append(i)
 				else:
 					fields_map[field] = [i]
 	max_length = 2
-
 	mapped_fields = {}
-
 	while max_length > 1:
 		max_length = 0
-
 		for field in fields_map:
 			if len(fields_map[field]) > max_length:
 				max_length = len(fields_map[field])
-
 		for field in fields_map:
 			if len(fields_map[field]) == 1 and field not in mapped_fields:
 				mapped_fields[field] = fields_map[field][0]
-
 		for mapped_field in mapped_fields:
 			for field in fields_map:
 				if field != mapped_field and mapped_fields[mapped_field] in fields_map[field]:
-					
 					fields_map[field].remove(mapped_fields[mapped_field])
 	return mapped_fields
 		
@@ -82,12 +75,9 @@ def part_2(notes):
 	mapped_fields = get_mapped_fields(notes)
 	for mapped_field in mapped_fields:
 		if mapped_field.split()[0] == 'departure':
-			
 			departure_indices.append(mapped_fields[mapped_field])
-
 	for departure_index in departure_indices:
 		departure_values *= ticket[departure_index]
-
 	return departure_values
 
 def main():
