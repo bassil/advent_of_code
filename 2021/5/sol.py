@@ -72,21 +72,17 @@ def get_vents_from_diagonal_line(diagonal_line):
 
 def get_count(straight_lines, diagonal_lines=None):
     ocean_floor = {}
+    vents = []
     for straight_line in straight_lines:
-        vents = get_vents_from_straight_line(straight_line)
-        for vent in vents:
-            if vent in ocean_floor:
-                ocean_floor[vent] += 1
-            else:
-                ocean_floor[vent] = 1
+        vents += get_vents_from_straight_line(straight_line)
     if diagonal_lines is not None and len(diagonal_lines) != 0:
         for diagonal_line in diagonal_lines:
-            vents = get_vents_from_diagonal_line(diagonal_line)
-            for vent in vents:
-                if vent in ocean_floor:
-                    ocean_floor[vent] += 1
-                else:
-                    ocean_floor[vent] = 1
+            vents += get_vents_from_diagonal_line(diagonal_line)
+    for vent in vents:
+        if vent in ocean_floor:
+            ocean_floor[vent] += 1
+        else:
+            ocean_floor[vent] = 1
     count = 0
     for value in ocean_floor.values():
         if value >= 2:
