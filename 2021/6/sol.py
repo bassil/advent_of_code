@@ -22,9 +22,31 @@ def part_1(data, days):
     return len(data)
 
 
+def part_2(data, days):
+    counts = {i: 0 for i in range(9)}
+    for fish in data:
+        counts[fish] += 1
+    for day in range(days):
+        new_fish = counts[0]
+        counts[0] = counts[1]
+        counts[1] = counts[2]
+        counts[2] = counts[3]
+        counts[3] = counts[4]
+        counts[4] = counts[5]
+        counts[5] = counts[6]
+        counts[6] = counts[7] + new_fish
+        counts[7] = counts[8]
+        counts[8] = new_fish
+    return sum(counts.values())
+
+
 if __name__ == "__main__":
     test = False
     file_name = "sample.txt" if test else "input.txt"
     data = get_data(file_name)
-    days = 80
-    print(f"Part 1: Number of lanternfish after {days} days", part_1(data, days))
+    days_1 = 80
+    data_1 = data.copy()
+    print(f"Part 1: Number of lanternfish after {days_1} days", part_1(data_1, days_1))
+    days_2 = 256
+    data_2 = data.copy()
+    print(f"Part 2: Number of lanternfish after {days_2} days", part_2(data_2, days_2))
