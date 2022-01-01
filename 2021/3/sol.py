@@ -49,31 +49,33 @@ def get_most_common_bit(bit_count):
 def get_least_common_bit(bit_count):
     return "0" if bit_count[0] <= bit_count[1] else "1"
 
+
 def filter(data, position, bit):
-	filtered_data = []
-	for binary_number in data:
-		if binary_number[position] == bit:
-			filtered_data.append(binary_number)
-	return filtered_data
+    filtered_data = []
+    for binary_number in data:
+        if binary_number[position] == bit:
+            filtered_data.append(binary_number)
+    return filtered_data
+
 
 def get_oxygen_generator_rating(data):
-	digits = len(data[0])
-	for position in range(digits):
-		bit_count_by_position = get_bit_count_by_position(data)
-		mcb = get_most_common_bit(bit_count_by_position[position])
-		data = filter(data, position, mcb)
-		if len(data) == 1:
-			return int(data[0], 2)
+    digits = len(data[0])
+    for position in range(digits):
+        bit_count_by_position = get_bit_count_by_position(data)
+        mcb = get_most_common_bit(bit_count_by_position[position])
+        data = filter(data, position, mcb)
+        if len(data) == 1:
+            return int(data[0], 2)
 
 
 def get_CO2_generator_rating(data):
-	digits = len(data[0])
-	for position in range(digits):
-		bit_count_by_position = get_bit_count_by_position(data)
-		lcb = get_least_common_bit(bit_count_by_position[position])
-		data = filter(data, position, lcb)
-		if len(data) == 1:
-			return int(data[0], 2)
+    digits = len(data[0])
+    for position in range(digits):
+        bit_count_by_position = get_bit_count_by_position(data)
+        lcb = get_least_common_bit(bit_count_by_position[position])
+        data = filter(data, position, lcb)
+        if len(data) == 1:
+            return int(data[0], 2)
 
 
 def part_2(data):
