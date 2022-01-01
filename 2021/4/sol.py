@@ -62,9 +62,23 @@ def part_1(numbers, boards):
 			if is_bingo(playing_board):
 				return score(playing_board) * int(number)
 
+def part_2(numbers, boards):
+	playing_boards = boards.copy()
+	for number in numbers:
+		playing_boards = find_number_in_boards(playing_boards, number)
+		if len(playing_boards) == 1:
+			if is_bingo(playing_boards[0]):
+				return score(playing_boards[0]) * int(number)
+		else:
+			for playing_board in playing_boards:
+				if is_bingo(playing_board):
+					playing_boards.remove(playing_board)
+
+
 if __name__ == '__main__':
 	test = False
 	file_name = "sample.txt" if test else "input.txt"
 	numbers, boards = get_data(file_name)
 
 	print("Part 1:", part_1(numbers, boards))
+	print("Part 2:", part_2(numbers, boards))
