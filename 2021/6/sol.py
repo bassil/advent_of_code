@@ -28,14 +28,9 @@ def part_2(data, days):
         counts[fish] += 1
     for day in range(days):
         new_fish = counts[0]
-        counts[0] = counts[1]
-        counts[1] = counts[2]
-        counts[2] = counts[3]
-        counts[3] = counts[4]
-        counts[4] = counts[5]
-        counts[5] = counts[6]
-        counts[6] = counts[7] + new_fish
-        counts[7] = counts[8]
+        for i in range(8):
+            counts[i] = counts[i + 1]
+        counts[6] += new_fish
         counts[8] = new_fish
     return sum(counts.values())
 
