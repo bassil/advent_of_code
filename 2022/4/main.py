@@ -3,10 +3,10 @@
 
 def parse_input(filename):
 	"""
-		Returns:
-			data: list[list[set[int]]
-				A list of lists (sublists),
-				Each sublist consists of a pair of sets of integers.
+	Returns:
+		data: list[list[set[int]]
+			A list of lists (sublists),
+			Each sublist consists of a pair of sets of integers.
 	"""
 	data = []
 	with open(filename) as fp:
