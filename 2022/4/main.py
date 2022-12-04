@@ -2,16 +2,23 @@
 
 
 def parse_input(filename):
+	"""
+		Returns:
+			data: list[list[set[int]]
+				A list of lists (sublists),
+				Each sublist consists of a pair of sets of integers.
+	"""
 	data = []
 	with open(filename) as fp:
-		_data = [_.split(",") for _ in fp.read().split("\n")]
-	for assignment_pair in _data:
-		parsed_assignment_pair = [ _.split("-") for _ in assignment_pair]
-		assignment_pair_set = [
-			set(range(int(_1), int(_2) + 1)) for _1, _2 in parsed_assignment_pair
+		_data = [ _.split(",") for _ in fp.read().split("\n") ]
+	for assignment_pairs in _data:
+		parsed_assignment_pairs = [ _.split("-") for _ in assignment_pairs ]
+		assignment_set_pairs = [
+			set(range(int(_1), int(_2) + 1)) for _1, _2 in parsed_assignment_pairs
 		]
-		data.append(assignment_pair_set)
+		data.append(assignment_set_pairs)
 	return data
+
 
 def part_1(data):
 	count = 0
