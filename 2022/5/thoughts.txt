@@ -1,0 +1,36 @@
+Today's puzzle was an interesting challenge in parsing a rather strange input.
+This was the example input provided in the prompt:
+
+    [D]    
+[N] [C]    
+[Z] [M] [P]
+ 1   2   3 
+
+move 1 from 2 to 1
+move 3 from 1 to 3
+move 2 from 2 to 1
+move 1 from 1 to 2
+
+The input represented two pieces of information:
+
+- A visual representation of columns of stacked crates, and
+- A series of instructions representing moves from a source crate to a destination crate. 
+
+To solve the puzzle we need to provide the top crate from each stack after moving the crates according to the instructions.
+
+In part one, the crane is a CrateMover9000, which can only move one crate at a time, and, in part two, the crate is a CrateMover9001 (!!), which can move many crates at a time. This means that the order of the crates associated with a move instruction in part 1 are reversed in a move instruction in part 2.
+
+We decomposed the problem in the following way:
+
+- Parse the visual representation of the columns of stacked crates into a dictionary of lists of crates keyed by column number, where the beginning of each list is the bottom most crate, and the end of the each list is the top most crate,
+- Parse a move instruction and move the crates
+- Determine the topmost crate of each column of stacked crates,
+- Provide a concatenated string of crate identifiers.
+
+By far, the most time consuming element of this approach was the parsing of the visual representation of the crates. We decided to use a dictionary of lists, where each list represents a stack of crates. We instantiate the dictionary with empty lists for each of the stacks of crates. Next, we iterate over each row of the crates, and for each row, we would take a substring of length 4, which represents a stack, with index i, and determine whether the stack had a crate in that row. If the stack had a crate, we parsed the crate name from the substring and appended the crate name to the list of crates for stack i. 
+
+After we populated the dictionary of stacks of crates, we parsed the move instructions to determine how many crates we should move from the source stack to the destination stack. 
+
+While solving part 1, the logic for executing a move instruction existed in the function part_1. However, part 1 and part 2 were similar except for the number of crates to be moved at a time, and so we refactored the logic for executing a move instruction into separate functions for part 1 and for part 2, and simply provide the respective move functions as a parameter to the execute function.
+
+Happy hunting :D

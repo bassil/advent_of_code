@@ -7,10 +7,10 @@ def parse_input(filename):
 	return [_.split("\n") for _ in data]
 
 
-def parse_crates(data):
+def parse_crates(data, num_cols=9):
 	crates = {_: [] for _ in data[-1].split()}
 	for row in data[:-1]:
-		for i in range(9):
+		for i in range(num_cols):
 			col_key = str(i + 1)
 			crate = row[i * 4 : (i + 1) * 4].split("[")[-1].split("]")[0]
 			if crate != "    " and crate != "   ":
