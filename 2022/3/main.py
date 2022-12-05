@@ -1,4 +1,4 @@
-"""Day 3: """
+"""Day 3: Rucksack Reorganization"""
 
 
 def parse_input(filename):
