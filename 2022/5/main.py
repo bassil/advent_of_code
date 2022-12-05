@@ -17,6 +17,7 @@ def parse_crates(data, num_cols=9):
 				crates[col_key].insert(0, crate)
 	return crates
 
+
 def parse_moves(data):
 	moves = []
 	for instruction in data:
