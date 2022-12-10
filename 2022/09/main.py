@@ -114,6 +114,7 @@ def execute(data, num_knots):
 def part_1(data):
 	return execute(data, num_knots=2)
 
+
 def part_2(data):
 	return execute(data, num_knots=10)
 
