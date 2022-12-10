@@ -104,17 +104,18 @@ def parse_input(filename: str) -> list[list[str, int]]:
 	return data
 
 
-def part_1(data):
-	rope = Rope()
+def execute(data, num_knots):
+	rope = Rope(num_knots=num_knots)
 	for instruction in data:
 		rope.execute(instruction)
 	return rope.num_tail_positions
 
+
+def part_1(data):
+	return execute(data, num_knots=2)
+
 def part_2(data):
-	rope = Rope(num_knots=10)
-	for instruction in data:
-		rope.execute(instruction)
-	return rope.num_tail_positions
+	return execute(data, num_knots=10)
 
 if __name__ == '__main__':
 	filename = "input.txt"
