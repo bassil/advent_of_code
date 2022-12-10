@@ -55,20 +55,8 @@ class Rope:
 		self._tail_positions = set()
 
 	@property
-	def head(self) -> Knot:
-		return self._knots[0]
-	
-	@head.setter
-	def head(self, coords: list[int, int]) -> None:
-		self._knots[0] = coords
-
-	@property
 	def tail(self) -> Knot:
 		return self._knots[self._num_knots - 1]
-
-	@tail.setter
-	def tail(self, coords: list[int, int]) -> None:
-		self._knots[len(self._num_knots) - 1] = coords
 
 	@property
 	def tail_position(self) -> tuple[int, int]:
