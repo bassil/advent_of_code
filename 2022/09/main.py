@@ -87,8 +87,6 @@ class Rope:
 				dy = self._knots[i].y - self._knots[i - 1].y
 				if abs(dx) > 1 or abs(dy) > 1:
 					self._knots[i] + self._tail_move_map[(dx, dy)]
-
-
 		self._tail_positions.add(self.tail_position)
 
 	def execute(self, instruction: int) -> None:
