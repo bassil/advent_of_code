@@ -1,29 +1,6 @@
-"""Day 13: Distress Signal
+"""Day 13: Distress Signal"""
 
-Packet data consists of lists and integers.
-Each list starts with [, ends with ], and
-contains zero or more comma-separated values (either integers or other lists).
-Each packet is always a list and appears on its own line.
-
-When comparing two values, the first value is called left and the second value is called right.
-Then:
-    If both values are integers, the lower integer should come first. 
-    If the left integer is lower than the right integer, the inputs are in the right order.
-    If the left integer is higher than the right integer, the inputs are not in the right order. 
-    Otherwise, the inputs are the same integer; continue checking the next part of the input.
-    
-    If both values are lists, compare the first value of each list, then the second value, and so on.
-    If the left list runs out of items first, the inputs are in the right order.
-    If the right list runs out of items first, the inputs are not in the right order.
-    If the lists are the same length and no comparison makes a decision about the order, continue checking the next part of the input.
-    
-    If exactly one value is an integer, convert the integer to a list which contains that integer as its only value, then retry the comparison.
-    For example, if comparing [0,0,0] and 2, convert the right value to [2] (a list containing 2); 
-    the result is then found by instead comparing [0,0,0] and [2].
-"""
-import ast
-
-
+from functools import cmp_to_key
 
 def parse_input(filename):
     with open(filename) as fp:
@@ -33,47 +10,70 @@ def parse_input(filename):
     for _packet_pair in _data:
         packet_pair = []
         for _packet in _packet_pair:
-            packet = ast.literal_eval(_packet) # '[1, 2, 3]' -> [1, 2, 3]
+            packet = eval(_packet) # '[1, 2, 3]' -> [1, 2, 3]
             packet_pair.append(packet)
         data.append(packet_pair)
     return data
 
 
 def in_correct_order(first_packet, second_packet):
-    i = 0
-    num_checks = min(len(first_packet), len(second_packet))
-    for i in range(num_checks - 1):
-        left = first_packet[i]
-        right = second_packet[i]
-        if type(left) == type(right) == int:
-            if left < right:
-                return True
-            elif right < left:
-                return False
-            else:
-                continue
-        elif type(left) == type(right) == list:
-            print("both lists")
-            print(left, right)
-            return in_correct_order(left, right)
-        elif type(left) == int and type(right) == list:
-            left = [left]
-            return in_correct_order(left, right)
-        elif type(left) == list and type(right) == int:
-            right = [right]
-            return in_correct_order(left, right)
+    if isinstance(first_packet, list) and isinstance(second_packet, int):
+        second_packet = [second_packet]
+    
+    if isinstance(first_packet, int) and isinstance(second_packet, list):
+        first_packet = [first_packet]
+
+    if isinstance(first_packet, int) and isinstance(second_packet, int):
+        if first_packet < second_packet:
+            return 1
+        elif first_packet > second_packet:
+            return -1
         else:
-            print(left, right)
-    return False  
+            return 0
+    
+    if isinstance(first_packet, list) and isinstance(second_packet, list):
+        num_checks = min(len(first_packet), len(second_packet))
+        for i in range(num_checks):
+            order = in_correct_order(first_packet[i], second_packet[i])
+            if order == 1:
+                return 1
+            elif order == -1:
+                return -1
+        
+        # reached the end of one of the packet lists!
+        # need to check which one is longer
+        if num_checks == len(first_packet):
+            if len(first_packet) == len(second_packet):
+                return 0
+            return 1
+       
+        if num_checks == len(second_packet):
+            return -1
 
 
 def part_1(data):
+    ret = 0
     for index, (first_packet, second_packet) in enumerate(data):
-        print(index)
-        print(in_correct_order(first_packet, second_packet))
+        if in_correct_order(first_packet, second_packet) == 1:
+            ret += index + 1
+    return ret
+
+def part_2(data):
+    packets = [[2], [6]]
+    for packet_pair in data:
+        for packet in packet_pair:
+            packets.append(packet)
+    packets.sort(key=cmp_to_key(in_correct_order), reverse=True)
+    decoder_key = 1
+    for i, packet in enumerate(packets):
+        if packet in [[2], [6]]:
+            decoder_key *= i + 1
+    
+    return decoder_key
 
 
 if __name__ == "__main__":
-    filename = "sample_input.txt"
+    filename = "input.txt"
     data = parse_input(filename)
     print("part 1:", part_1(data))
+    print("part 2:", part_2(data))
